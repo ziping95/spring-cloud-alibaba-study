@@ -1,0 +1,23 @@
+# Nacos和SpringCloud-config一样，在项目初始化时，要保证先从配置中心进行配置拉取，拉取配置之后，才能保证项目正常启动
+# SpringBoot中配置文件加载是存在优先级顺序的，bootstrap优先级高于application
+# 建议bootstrap存放公有配置，application存放私有配置，bootstrap存放一定不会变的配置
+
+server:
+  port: 8001
+
+spring:
+  application:
+    name: module-user-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 152.136.106.44:8848 # nacos注册中心地址
+        namespace: 80eeaa36-4988-4601-81c3-b8148e5891ea
+        group: DEFAULT_GROUP
+      config:
+        server-addr: 152.136.106.44:8848 # Nacos作为配置中心地址
+        file-extension: yaml # 指定yaml格式配置
+        namespace: 80eeaa36-4988-4601-81c3-b8148e5891ea
+        group: DEFAULT_GROUP
+
+# ${spring.application.name}-${spring.profile.active}.${spring.cloud.nacos.config.file-extension}

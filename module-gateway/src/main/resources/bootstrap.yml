@@ -1,0 +1,17 @@
+server:
+  port: 8000
+
+spring:
+  application:
+    name: module-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 152.136.106.44:8848 # nacos注册中心地址
+        namespace: 80eeaa36-4988-4601-81c3-b8148e5891ea
+        group: DEFAULT_GROUP
+      config:
+        server-addr: 152.136.106.44:8848 # Nacos作为配置中心地址
+        file-extension: yaml # 指定yaml格式配置
+        namespace: 80eeaa36-4988-4601-81c3-b8148e5891ea
+        group: DEFAULT_GROUP

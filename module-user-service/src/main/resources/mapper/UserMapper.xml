@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzp.module.user.service.mapper.UserMapper">
+
+    <resultMap id="user" type="com.wzp.module.core.pojo.User">
+        <id column="userId" property="id" javaType="Integer"/>
+        <result column="userLoginId" property="loginId" javaType="String" />
+        <result column="userPassword" property="password" javaType="String" />
+        <result column="userPhone" property="phone" javaType="Long" />
+        <result column="userMail" property="mail" javaType="String" />
+        <result column="userAddress" property="address" javaType="String" />
+        <result column="userCreateDate" property="createDate" javaType="Date"/>
+        <result column="userUpdateDate" property="updateDate" javaType="Date"/>
+        <association column="FK_ROLE_ID" property="role" javaType="com.wzp.module.core.pojo.Role">
+            <id column="roleId" property="id" javaType="Integer"/>
+            <result column="roleName" property="name" javaType="String"/>
+            <result column="roleCode" property="code" javaType="Integer"/>
+            <result column="roleSuperAdmin" property="superAdmin" javaType="boolean"/>
+            <result column="roleCreateDate" property="createDate" javaType="Date"/>
+            <result column="roleUpdateDate" property="updateDate" javaType="Date"/>
+            <collection property="authorityList" resultMap="authority"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="authority" type="com.wzp.module.core.pojo.Authority">
+        <id column="authorityId" property="id" javaType="Integer"/>
+        <result column="authorityName" property="name" javaType="String"/>
+        <result column="authorityPath" property="path" javaType="String"/>
+        <result column="authorityCreateDate" property="createDate" javaType="Date"/>
+        <result column="authorityUpdateDate" property="updateDate" javaType="Date"/>
+    </resultMap>
+
+    <sql id="userColumn">
+        user.id as userId,user.login_id as userLoginId,user.password as userPassword,user.phone as userPhone,
+        user.address as userAddress,user.mail as userMail,user.create_date as userCreateDate,user.update_date as userUpdateDate
+    </sql>
+
+    <sql id="roleColumn">
+        role.id as roleId,role.name as roleName,role.code as roleCode,role.super_admin as roleSuperAdmin,
+        role.create_date as roleCreateDate,role.update_date as roleUpdateDate
+    </sql>
+
+    <sql id="authorityColumn">
+        authority.id as authorityId,authority.name as authorityName,authority.path as authorityPath,
+        authority.create_date as authorityCreateDate,authority.update_date as authorityUpdateDate
+    </sql>
+
+    <sql id="condition">
+        <if test="phone != null">and user.phone = #{phone}</if>
+        <if test="mail != null">and user.mail = #{mail}</if>
+        <if test="loginId != null">and user.login_id= #{loginId}</if>
+    </sql>
+
+    <select id="test" resultMap="user">
+        select <include refid="userColumn"/>
+        from `user` user
+        <where>
+            <if test="!a and !b and !c">
+                and user.id = 1
+            </if>
+        </where>
+    </select>
+
+    <select id="findUserByCondition" parameterType="com.wzp.module.core.pojo.User" resultMap="user">
+        select <include refid="userColumn"/>,<include refid="roleColumn"/>,<include refid="authorityColumn"/>
+        from `user` user
+        INNER JOIN `role` role ON user.role_id = role.id
+        LEFT JOIN `role_authority` ra ON ra.role_id = role.id
+        LEFT JOIN `authority` authority ON ra.authority_id = authority.id
+        <where>
+            <include refid="condition"/>
+        </where>
+    </select>
+
+    <select id="findUserByIds" resultMap="user">
+        select <include refid="userColumn"/>
+        from `user` user
+        <where>
+            <if test="ids!=null and ids.size > 0">
+                and user.id in
+                <foreach collection="ids" separator="," index="i" item="id" open="(" close=")" >
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+
+    <select id="findUserByMap" resultMap="user">
+        select <include refid="userColumn"/>
+        from `user` user
+        <where>
+            <if test="mapIds!=null and mapIds.size > 0">
+                and user.id in
+                <foreach collection="mapIds" separator="," index="key" item="value" open="(" close=")" >
+                    #{key}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

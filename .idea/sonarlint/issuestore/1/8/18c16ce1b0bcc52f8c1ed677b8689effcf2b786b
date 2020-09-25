@@ -1,0 +1,24 @@
+
+{
+java:S1171R"YMove the contents of this initializer to a standard constructor or to field initializers.(ÒÌâ–øÿÿÿÿ8 ¯µÉ.
+I
+java:S3599Q",Use another way to initialize this instance.( Âş»8 ¯µÉ.
+W
+java:S1191
+"5Use classes from the Java API instead of Sun classes.(‰ìòüÿÿÿÿ8Ïü¬ƒÊ.
+f
+java:S1128"DRemove this unused import 'java.util.concurrent.ArrayBlockingQueue'.(ÜÙ×Ëúÿÿÿÿ8Ì­É.
+U
+java:S1128"8Remove this unused import 'cn.hutool.core.util.StrUtil'.(ƒËôø8¨¸«ÿÀ.
+a
+java:S1128
+"?Remove this unused import 'sun.security.util.AuthResources_it'.(‰ìòüÿÿÿÿ8Ïü¬ƒÊ.
+j
+java:S1128"HRemove this unused import 'org.apache.ibatis.logging.stdout.StdOutImpl'.(Í½ôÀùÿÿÿÿ8‰åêƒÊ.
+Q
+java:S1128"4Remove this unused import 'cn.hutool.db.PageResult'.(¶·Çœ8š’†É.
+U	java:S106‚"9Replace this use of System.out or System.err by a logger.(Ãæ
+8´ÔìƒÊ.
+V	java:S106"9Replace this use of System.out or System.err by a logger.(õ¹¤õ8‰åêƒÊ.
+P
+java:S1905("3Remove this unnecessary cast to "GrantedAuthority".(‹¼¶ò8õæ¥À.
